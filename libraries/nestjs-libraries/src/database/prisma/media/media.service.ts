@@ -26,6 +26,18 @@ export class MediaService {
   ) {}
 
   async deleteMedia(org: string, id: string) {
+    // PostaRocket: apagar tambem o arquivo fisico (LGPD)
+    try {
+      const media = await this._mediaRepository.getMediaById(id);
+      if (media && media.organizationId === org) {
+        await this.storage.removeFile(media.path);
+        if (media.thumbnail) {
+          await this.storage.removeFile(media.thumbnail);
+        }
+      }
+    } catch (err) {
+      console.error('PostaRocket: erro ao remover arquivo do storage:', err);
+    }
     return this._mediaRepository.deleteMedia(org, id);
   }
 

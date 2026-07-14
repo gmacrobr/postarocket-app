@@ -27,7 +27,7 @@ export const SignaturesComponent: FC<{
   const addSignature = useCallback(
     (data?: any) => () => {
       modal.openModal({
-        title: data ? 'Edit Signature' : 'Add Signature',
+        title: data ? 'Editar Assinatura' : 'Adicionar Assinatura',
         withCloseButton: true,
         children: <AddOrRemoveSignature data={data} reload={mutate} />,
       });
@@ -50,7 +50,7 @@ export const SignaturesComponent: FC<{
           method: 'DELETE',
         });
         mutate();
-        toaster.show('Signature deleted successfully', 'success');
+        toaster.show('Assinatura excluída com sucesso', 'success');
       }
     },
     []
@@ -60,11 +60,11 @@ export const SignaturesComponent: FC<{
 
   return (
     <div className="flex flex-col">
-      <h3 className="text-[20px]">{t('signatures', 'Signatures')}</h3>
+      <h3 className="text-[20px]">{t('signatures', 'Assinaturas')}</h3>
       <div className="text-customColor18 mt-[4px]">
         {t(
           'you_can_add_signatures_to_your_account_to_be_used_in_your_posts',
-          'You can add signatures to your account to be used in your posts.'
+          'Adicione assinaturas à sua conta para usar nas suas publicações.'
         )}
       </div>
       <div className="my-[16px] mt-[16px] bg-sixth border-fifth items-center border rounded-[4px] p-[24px] flex gap-[24px]">
@@ -77,13 +77,13 @@ export const SignaturesComponent: FC<{
                   : 'grid-cols-[1fr,1fr,1fr,1fr]'
               } w-full gap-y-[10px]`}
             >
-              <div>{t('content', 'Content')}</div>
-              <div className="text-center">{t('auto_add', 'Auto Add?')}</div>
+              <div>{t('content', 'Conteúdo')}</div>
+              <div className="text-center">{t('auto_add', 'Adicionar automaticamente?')}</div>
               {!!appendSignature && (
-                <div className="text-center">{t('actions', 'Actions')}</div>
+                <div className="text-center">{t('actions', 'Ações')}</div>
               )}
               <div className="text-center">{t('edit', 'Edit')}</div>
-              <div className="text-center">{t('delete', 'Delete')}</div>
+              <div className="text-center">{t('delete', 'Excluir')}</div>
               {data?.map((p: any) => (
                 <Fragment key={p.id}>
                   <div className="relative flex-1 me-[20px] overflow-x-hidden">
@@ -99,7 +99,7 @@ export const SignaturesComponent: FC<{
                   {!!appendSignature && (
                     <div className="flex justify-center">
                       <Button onClick={() => appendSignature(p.content)}>
-                        {t('use_signature', 'Use Signature')}
+                        {t('use_signature', 'Usar Assinatura')}
                       </Button>
                     </div>
                   )}
@@ -113,7 +113,7 @@ export const SignaturesComponent: FC<{
                   <div className="flex justify-center">
                     <div>
                       <Button onClick={deleteSignature(p)}>
-                        {t('delete', 'Delete')}
+                        {t('delete', 'Excluir')}
                       </Button>
                     </div>
                   </div>
@@ -126,7 +126,7 @@ export const SignaturesComponent: FC<{
               onClick={addSignature()}
               className={clsx((data?.length || 0) > 0 && 'my-[16px]')}
             >
-              {t('add_a_signature', 'Add a signature')}
+              {t('add_a_signature', 'Adicionar uma assinatura')}
             </Button>
           </div>
         </div>
@@ -163,7 +163,7 @@ const AddOrRemoveSignature: FC<{
       });
       toast.show(
         data?.id
-          ? 'Signature updated successfully'
+          ? 'Assinatura atualizada com sucesso'
           : 'Signature added successfully',
         'success'
       );
@@ -204,7 +204,7 @@ const AddOrRemoveSignature: FC<{
             <CopilotTextarea
               disableBranding={true}
               className={clsx(
-                '!min-h-40 !max-h-80 p-2 overflow-x-hidden scrollbar scrollbar-thumb-[#612AD5] bg-bigStrip outline-none'
+                '!min-h-40 !max-h-80 p-2 overflow-x-hidden scrollbar scrollbar-thumb-[#FF6B00] bg-bigStrip outline-none'
               )}
               value={text}
               onChange={(e) => {

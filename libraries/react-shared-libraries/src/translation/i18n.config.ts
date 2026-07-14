@@ -1,12 +1,13 @@
-export const fallbackLng = 'en';
+// PostaRocket: português como idioma padrão da instância
+export const fallbackLng = 'pt';
 export const languages = [
   fallbackLng,
+  'en',
   'he',
   'ru',
   'zh',
   'fr',
   'es',
-  'pt',
   'de',
   'it',
   'ja',

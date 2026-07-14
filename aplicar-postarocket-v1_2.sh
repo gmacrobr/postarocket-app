@@ -1,3 +1,51 @@
+#!/bin/bash
+# ============================================================
+# APLICAR-POSTAROCKET-V1.2.SH
+#   1) Português como idioma PADRÃO (fallback do i18n)
+#   2) Bandeira do Brasil 🇧🇷 no seletor de idiomas
+#   3) Tela de login redesenhada com a identidade PostaRocket
+# Rodar na RAIZ do repositório, depois dos patches v1 e v1.1
+# ============================================================
+set -e
+ok(){ echo "  ✓ $1"; }
+falha(){ echo "  ✗ ERRO: $1"; exit 1; }
+[ -f Dockerfile.dev ] || falha "Rode na RAIZ do repositório postarocket-app!"
+
+echo "=== 1/3 — Português como idioma padrão ==="
+cat > libraries/react-shared-libraries/src/translation/i18n.config.ts <<'EOF'
+// PostaRocket: português como idioma padrão da instância
+export const fallbackLng = 'pt';
+export const languages = [
+  fallbackLng,
+  'en',
+  'he',
+  'ru',
+  'zh',
+  'fr',
+  'es',
+  'de',
+  'it',
+  'ja',
+  'ko',
+  'ar',
+  'tr',
+  'vi',
+];
+
+export const defaultNS = 'translation';
+export const cookieName = 'i18next';
+export const headerName = 'x-i18next-current-language';
+EOF
+ok "fallback do i18n agora é 'pt' (inglês continua disponível no seletor)"
+
+echo "=== 2/3 — Bandeira do Brasil no seletor ==="
+F=apps/frontend/src/components/layout/language.component.tsx
+grep -q "return 'BR'" $F || sed -i "s|if (languageCode === 'en') return 'GB';|if (languageCode === 'en') return 'GB';\n  if (languageCode === 'pt') return 'BR';|" $F
+grep -q "return 'BR'" $F || falha "não consegui inserir a bandeira BR"
+ok "idioma 'pt' agora exibe a bandeira 🇧🇷"
+
+echo "=== 3/3 — Tela de login PostaRocket ==="
+cat > "apps/frontend/src/app/(app)/auth/layout.tsx" <<'EOF'
 export const dynamic = 'force-dynamic';
 import { ReactNode } from 'react';
 import loadDynamic from 'next/dynamic';
@@ -106,3 +154,11 @@ export default async function AuthLayout({
     </div>
   );
 }
+EOF
+ok "tela de login redesenhada (foguete animado, estrelas e texto em português)"
+
+echo ""
+echo "============================================================"
+echo "🚀 V1.2 APLICADO! Reconstruir a imagem:"
+echo "   docker build -t postarocket-app:v1 -f Dockerfile.dev ."
+echo "============================================================"

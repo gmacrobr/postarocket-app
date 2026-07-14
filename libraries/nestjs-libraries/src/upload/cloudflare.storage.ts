@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import 'multer';
 import { makeId } from '@gitroom/nestjs-libraries/services/make.is';
 import mime from 'mime-types';
@@ -156,12 +156,18 @@ class CloudflareStorage implements IUploadProvider {
 
   // Implement the removeFile method from IUploadProvider
   async removeFile(filePath: string): Promise<void> {
-    // const fileName = filePath.split('/').pop(); // Extract the filename from the path
-    // const command = new DeleteObjectCommand({
-    //   Bucket: this._bucketName,
-    //   Key: fileName,
-    // });
-    // await this._client.send(command);
+    // PostaRocket: exclusao real no R2 (chave = caminho relativo a URL publica)
+    try {
+      const key = filePath
+        .replace(this._uploadUrl + '/', '')
+        .replace(/^https?:\/\/[^/]+\//, '');
+      if (!key) return;
+      await this._client.send(
+        new DeleteObjectCommand({ Bucket: this._bucketName, Key: key })
+      );
+    } catch (err) {
+      console.error('PostaRocket: erro ao remover arquivo do R2:', err);
+    }
   }
 }
 
