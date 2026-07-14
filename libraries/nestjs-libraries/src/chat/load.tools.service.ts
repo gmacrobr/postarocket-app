@@ -1,6 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Agent } from '@mastra/core/agent';
-import { openai } from '@ai-sdk/openai';
+import { openai, createOpenAI } from '@ai-sdk/openai';
+
+// PostaRocket: provider de chat configuravel (OpenRouter etc.)
+const aiProvider = createOpenAI({
+  apiKey: process.env.AI_API_KEY || process.env.OPENAI_API_KEY || '',
+  ...(process.env.AI_BASE_URL ? { baseURL: process.env.AI_BASE_URL } : {}),
+});
+const astroModel = () =>
+  process.env.AI_BASE_URL
+    ? aiProvider.chat(process.env.AI_MODEL || 'gpt-4.1')
+    : openai('gpt-5.2');
 import { Memory } from '@mastra/memory';
 import { pStore } from '@gitroom/nestjs-libraries/chat/mastra.store';
 import { array, object, string } from 'zod';
@@ -87,7 +97,7 @@ export class LoadToolsService {
       )}
 `;
       },
-      model: openai('gpt-5.2'),
+      model: astroModel(),
       tools,
       memory: new Memory({
         storage: pStore,
