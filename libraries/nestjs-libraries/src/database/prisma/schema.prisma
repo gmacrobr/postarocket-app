@@ -968,3 +968,61 @@ model Announcement {
   color       AnnouncementColor @default(INFO)
   createdAt   DateTime          @default(now())
 }
+
+// ============================================================
+// PostaRocket — Biblioteca Rocket (B1)
+// Nichos, mídias e anúncios prontos (conteúdo global, curado
+// pelo superadmin, disponível para todos os tenants).
+// ============================================================
+
+model LibraryNiche {
+  id          String        @id @default(uuid())
+  name        String
+  slug        String        @unique
+  icon        String?       // emoji ou nome de ícone
+  description String?
+  order       Int           @default(0)
+  active      Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  medias      LibraryMedia[]
+  ads         LibraryAd[]
+}
+
+model LibraryMedia {
+  id          String        @id @default(uuid())
+  title       String
+  type        String        @default("image") // image | video
+  url         String
+  thumbnail   String?
+  category    String?       // categoria livre p/ filtros (ex: "promoção", "institucional")
+  tags        String?       // csv simples de tags
+  nicheId     String?
+  niche       LibraryNiche? @relation(fields: [nicheId], references: [id])
+  order       Int           @default(0)
+  active      Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([nicheId])
+  @@index([category])
+}
+
+model LibraryAd {
+  id          String        @id @default(uuid())
+  title       String        // título interno do anúncio pronto
+  postTitle   String?       // título sugerido do post
+  copy        String        // legenda/copy completa pronta para editar
+  mediaType   String        @default("image") // image | video
+  mediaUrl    String?
+  thumbnail   String?
+  category    String?
+  nicheId     String?
+  niche       LibraryNiche? @relation(fields: [nicheId], references: [id])
+  order       Int           @default(0)
+  active      Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([nicheId])
+}
