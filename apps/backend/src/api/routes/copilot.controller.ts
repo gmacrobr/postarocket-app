@@ -1,3 +1,4 @@
+import OpenAI from 'openai';
 import {
   Logger,
   Controller,
@@ -39,8 +40,7 @@ export class CopilotController {
   @Post('/chat')
   chatAgent(@Req() req: Request, @Res() res: Response) {
     if (
-      process.env.OPENAI_API_KEY === undefined ||
-      process.env.OPENAI_API_KEY === ''
+      !(process.env.OPENAI_API_KEY || process.env.AI_API_KEY)
     ) {
       Logger.warn('OpenAI API key not set, chat functionality will not work');
       return;
@@ -50,7 +50,13 @@ export class CopilotController {
       endpoint: '/copilot/chat',
       runtime: new CopilotRuntime(),
       serviceAdapter: new OpenAIAdapter({
-        model: 'gpt-4.1',
+        openai: new OpenAI({
+          apiKey: process.env.AI_API_KEY || process.env.OPENAI_API_KEY,
+          ...(process.env.AI_BASE_URL
+            ? { baseURL: process.env.AI_BASE_URL }
+            : {}),
+        }) as any,
+        model: process.env.AI_MODEL || 'gpt-4.1',
       }),
     });
 
@@ -65,8 +71,7 @@ export class CopilotController {
     @GetOrgFromRequest() organization: Organization
   ) {
     if (
-      process.env.OPENAI_API_KEY === undefined ||
-      process.env.OPENAI_API_KEY === ''
+      !(process.env.OPENAI_API_KEY || process.env.AI_API_KEY)
     ) {
       Logger.warn('OpenAI API key not set, chat functionality will not work');
       return;
@@ -96,7 +101,13 @@ export class CopilotController {
       runtime,
       // properties: req.body.variables.properties,
       serviceAdapter: new OpenAIAdapter({
-        model: 'gpt-4.1',
+        openai: new OpenAI({
+          apiKey: process.env.AI_API_KEY || process.env.OPENAI_API_KEY,
+          ...(process.env.AI_BASE_URL
+            ? { baseURL: process.env.AI_BASE_URL }
+            : {}),
+        }) as any,
+        model: process.env.AI_MODEL || 'gpt-4.1',
       }),
     });
 

@@ -8,6 +8,13 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'sk-proj-',
 });
 
+// PostaRocket: cliente de CHAT configuravel (OpenRouter etc). Imagens seguem na OpenAI.
+const aiChat = new OpenAI({
+  apiKey: process.env.AI_API_KEY || process.env.OPENAI_API_KEY || 'sk-proj-',
+  ...(process.env.AI_BASE_URL ? { baseURL: process.env.AI_BASE_URL } : {}),
+});
+const AI_MODEL = process.env.AI_MODEL || 'gpt-4.1';
+
 const PicturePrompt = z.object({
   prompt: z.string(),
 });
@@ -35,8 +42,8 @@ export class OpenaiService {
   async generatePromptForPicture(prompt: string) {
     return (
       (
-        await openai.chat.completions.parse({
-          model: 'gpt-4.1',
+        await aiChat.chat.completions.parse({
+          model: AI_MODEL,
           messages: [
             {
               role: 'system',
@@ -56,8 +63,8 @@ export class OpenaiService {
   async generateVoiceFromText(prompt: string) {
     return (
       (
-        await openai.chat.completions.parse({
-          model: 'gpt-4.1',
+        await aiChat.chat.completions.parse({
+          model: AI_MODEL,
           messages: [
             {
               role: 'system',
@@ -77,7 +84,7 @@ export class OpenaiService {
   async generatePosts(content: string) {
     const posts = (
       await Promise.all([
-        openai.chat.completions.create({
+        aiChat.chat.completions.create({
           messages: [
             {
               role: 'assistant',
@@ -91,9 +98,9 @@ export class OpenaiService {
           ],
           n: 5,
           temperature: 1,
-          model: 'gpt-4.1',
+          model: AI_MODEL,
         }),
-        openai.chat.completions.create({
+        aiChat.chat.completions.create({
           messages: [
             {
               role: 'assistant',
@@ -107,7 +114,7 @@ export class OpenaiService {
           ],
           n: 5,
           temperature: 1,
-          model: 'gpt-4.1',
+          model: AI_MODEL,
         }),
       ])
     ).flatMap((p) => p.choices);
@@ -133,7 +140,7 @@ export class OpenaiService {
     );
   }
   async extractWebsiteText(content: string) {
-    const websiteContent = await openai.chat.completions.create({
+    const websiteContent = await aiChat.chat.completions.create({
       messages: [
         {
           role: 'assistant',
@@ -145,7 +152,7 @@ export class OpenaiService {
           content,
         },
       ],
-      model: 'gpt-4.1',
+      model: AI_MODEL,
     });
 
     const { content: articleContent } = websiteContent.choices[0].message;
@@ -164,8 +171,8 @@ export class OpenaiService {
 
     const posts =
       (
-        await openai.chat.completions.parse({
-          model: 'gpt-4.1',
+        await aiChat.chat.completions.parse({
+          model: AI_MODEL,
           messages: [
             {
               role: 'system',
@@ -197,8 +204,8 @@ export class OpenaiService {
             try {
               return (
                 (
-                  await openai.chat.completions.parse({
-                    model: 'gpt-4.1',
+                  await aiChat.chat.completions.parse({
+                    model: AI_MODEL,
                     messages: [
                       {
                         role: 'system',
@@ -233,8 +240,8 @@ export class OpenaiService {
         const message = `You are an assistant that takes a text and break it into slides, each slide should have an image prompt and voice text to be later used to generate a video and voice, image prompt should capture the essence of the slide and also have a back dark gradient on top, image prompt should not contain text in the picture, generate between 3-5 slides maximum`;
         const parse =
           (
-            await openai.chat.completions.parse({
-              model: 'gpt-4.1',
+            await aiChat.chat.completions.parse({
+              model: AI_MODEL,
               messages: [
                 {
                   role: 'system',

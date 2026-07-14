@@ -23,9 +23,12 @@ const tools = !process.env.TAVILY_API_KEY
 const toolNode = new ToolNode(tools);
 
 const model = new ChatOpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'sk-proj-',
-  model: 'gpt-4.1',
+  apiKey: process.env.AI_API_KEY || process.env.OPENAI_API_KEY || 'sk-proj-',
+  model: process.env.AI_MODEL || 'gpt-4.1',
   temperature: 0.7,
+  ...(process.env.AI_BASE_URL
+    ? { configuration: { baseURL: process.env.AI_BASE_URL } }
+    : {}),
 });
 
 const dalle = new DallEAPIWrapper({
