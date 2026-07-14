@@ -115,6 +115,27 @@ export const useMenuItem = () => {
       path: '/media',
     },
     {
+      name: t('biblioteca', 'Biblioteca'),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="21"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15zM9 7h7M9 11h5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      path: '/biblioteca',
+    },
+    {
       name: t('plugs', 'Plugs'),
       icon: (
         <svg
@@ -272,6 +293,27 @@ export const useMenuItem = () => {
       path: '/billing',
       role: ['ADMIN', 'SUPERADMIN'],
       requireBilling: true,
+    },
+    {
+      name: t('suporte', 'Suporte'),
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="21"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM4.93 4.93l3.39 3.39M15.68 15.68l3.39 3.39M15.68 8.32l3.39-3.39M4.93 19.07l3.39-3.39"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      path: '/suporte',
     },
     {
       name: t('settings', 'Settings'),
