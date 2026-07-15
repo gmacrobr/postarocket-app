@@ -145,6 +145,15 @@ export const useMenuItem = () => {
       path: '/creditos',
     },
     {
+      name: t('estudio', 'Estúdio de IA'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3l1.9 4.8L19 9.5l-4 3.4 1.3 5.1L12 15.3 7.7 18l1.3-5.1-4-3.4 5.1-1.7L12 3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        </svg>
+      ),
+      path: '/estudio',
+    },
+    {
       name: t('plugs', 'Plugs'),
       icon: (
         <svg
