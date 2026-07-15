@@ -136,6 +136,15 @@ export const useMenuItem = () => {
       path: '/biblioteca',
     },
     {
+      name: t('creditos', 'Créditos'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 24 24" fill="none">
+          <path d="M3 7h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7zM3 7l2-3h14l2 3M16 13h.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+      path: '/creditos',
+    },
+    {
       name: t('plugs', 'Plugs'),
       icon: (
         <svg

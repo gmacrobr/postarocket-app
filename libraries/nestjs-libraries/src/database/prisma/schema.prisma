@@ -47,6 +47,7 @@ model Organization {
   @@index([apiKey])
   @@index([streakSince])
   @@index([paymentId])
+  creditWallet          CreditWallet?
 }
 
 model Tags {
@@ -1025,4 +1026,58 @@ model LibraryAd {
   updatedAt   DateTime      @updatedAt
 
   @@index([nicheId])
+}
+
+// ============================================================
+// PostaRocket — Estúdio de IA · Carteira de Créditos (C1)
+// Sistema pré-pago: 1 crédito = R$0,01. Débito atômico.
+// ============================================================
+
+model CreditWallet {
+  id             String              @id @default(uuid())
+  organizationId String              @unique
+  organization   Organization        @relation(fields: [organizationId], references: [id])
+  balance        Int                 @default(0) // saldo em créditos
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  transactions   CreditTransaction[]
+
+  @@index([organizationId])
+}
+
+model CreditTransaction {
+  id          String       @id @default(uuid())
+  walletId    String
+  wallet      CreditWallet @relation(fields: [walletId], references: [id])
+  amount      Int          // positivo = recarga | negativo = consumo
+  balanceAfter Int         // saldo após a transação (auditoria)
+  type        String       // recarga | consumo | estorno | bonus | ajuste
+  action      String?      // ex: "copy", "imagem", "flyer" (no consumo)
+  description String?
+  reference   String?      // id externo (cobrança Asaas, etc.)
+  createdAt   DateTime     @default(now())
+
+  @@index([walletId])
+  @@index([type])
+}
+
+model CreditPackage {
+  id        String   @id @default(uuid())
+  name      String
+  price     Int      // preço em centavos de R$
+  credits   Int      // créditos creditados
+  bonus     Int      @default(0) // créditos de bônus
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CreditActionPrice {
+  id        String   @id @default(uuid())
+  action    String   @unique // "copy" | "imagem" | "flyer" | "video"
+  label     String
+  cost      Int      // custo em créditos
+  active    Boolean  @default(true)
+  updatedAt DateTime @updatedAt
 }
