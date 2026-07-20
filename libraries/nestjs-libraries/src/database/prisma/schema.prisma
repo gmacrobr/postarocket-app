@@ -1081,3 +1081,22 @@ model CreditActionPrice {
   active    Boolean  @default(true)
   updatedAt DateTime @updatedAt
 }
+
+// ============================================================
+// PostaRocket — Estúdio de IA · Modelos de Imagem (C3)
+// Seletor gerenciável: admin cadastra os "motores" e o custo.
+// ============================================================
+
+model ImageModel {
+  id        String   @id @default(uuid())
+  key       String   @unique // identificador interno (ex: "rapido")
+  label     String   // nome amigável (ex: "⚡ Rápido")
+  provider  String   @default("openai") // openai | replicate | fal ...
+  model     String   // modelo real (ex: "gpt-image-1")
+  quality   String?  // low | medium | high (openai)
+  cost      Int      // custo em créditos
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
