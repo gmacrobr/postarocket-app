@@ -1004,6 +1004,14 @@ model LibraryMedia {
   active      Boolean       @default(true)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  segmentId   String?
+  categoryId  String?
+  packId      String?
+  fileName    String?
+  width       Int?
+  height      Int?
+  orientation String?       // vertical | horizontal | quadrado
+  approval    String        @default("novo") // novo | editado | aprovado
 
   @@index([nicheId])
   @@index([category])
@@ -1099,4 +1107,52 @@ model ImageModel {
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// PostaRocket — Biblioteca Rocket B2
+// Hierarquia: Nicho → Segmento → Categoria  +  Packs
+// ============================================================
+
+model LibrarySegment {
+  id         String            @id @default(uuid())
+  name       String
+  nicheId    String
+  order      Int               @default(0)
+  active     Boolean           @default(true)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  categories LibraryCategory[]
+
+  @@index([nicheId])
+}
+
+model LibraryCategory {
+  id        String         @id @default(uuid())
+  name      String
+  segmentId String
+  segment   LibrarySegment @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+  order     Int            @default(0)
+  active    Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([segmentId])
+}
+
+model LibraryPack {
+  id          String   @id @default(uuid())
+  code        String   @unique // ex: EDU-TEC-001
+  name        String
+  nicheId     String?
+  segmentId   String?
+  description String?
+  cover       String?
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([nicheId])
+  @@index([segmentId])
 }

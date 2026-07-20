@@ -1,0 +1,8 @@
+  segmentId   String?
+  categoryId  String?
+  packId      String?
+  fileName    String?
+  width       Int?
+  height      Int?
+  orientation String?       // vertical | horizontal | quadrado
+  approval    String        @default("novo") // novo | editado | aprovado

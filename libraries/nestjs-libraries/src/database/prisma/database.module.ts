@@ -17,6 +17,7 @@ import { CreditsService } from '@gitroom/nestjs-libraries/database/prisma/credit
 import { StudioService } from '@gitroom/nestjs-libraries/database/prisma/studio/studio.service';
 import { ImageStudioService } from '@gitroom/nestjs-libraries/database/prisma/studio/image.studio.service';
 import { LibraryService } from '@gitroom/nestjs-libraries/database/prisma/library/library.service';
+import { LibraryTreeService } from '@gitroom/nestjs-libraries/database/prisma/library/library.tree.service';
 import { LibraryRepository } from '@gitroom/nestjs-libraries/database/prisma/library/library.repository';
 import { MediaRepository } from '@gitroom/nestjs-libraries/database/prisma/media/media.repository';
 import { NotificationsRepository } from '@gitroom/nestjs-libraries/database/prisma/notifications/notifications.repository';
@@ -82,6 +83,7 @@ import { AdminStatsService } from '@gitroom/nestjs-libraries/database/prisma/adm
     StudioService,
     ImageStudioService,
     LibraryService,
+    LibraryTreeService,
     LibraryRepository,
     MediaRepository,
     AgenciesService,
