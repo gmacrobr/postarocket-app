@@ -21,7 +21,13 @@ const SIZES: Record<string, string> = {
 
 @Injectable()
 export class ImageStudioService {
-  private storage = UploadFactory.createStorage();
+  private _storage: any = null;
+  private get storage() {
+    if (!this._storage) {
+      this._storage = UploadFactory.createStorage();
+    }
+    return this._storage;
+  }
 
   constructor(
     private _credits: CreditsService,
