@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
 import { useToaster } from '@gitroom/react/toaster/toaster';
 import { useUser } from '@gitroom/frontend/components/layout/user.context';
+import { BrandComposeModal } from '@gitroom/frontend/components/brandkit/brand.compose';
 
 const fire: React.CSSProperties = {
   backgroundImage: 'linear-gradient(135deg,#FFC400 0%,#FF6B00 45%,#E11D2E 100%)',
@@ -51,6 +52,7 @@ export const LibraryB2Component: FC = () => {
   const [q, setQ] = useState('');
   const [sel, setSel] = useState<string[]>([]);
   const [adminOpen, setAdminOpen] = useState(false);
+  const [compose, setCompose] = useState<Media | null>(null);
 
   const nichesReq = useSWR('/library/niches', async (u) => (await fetch(u)).json());
   const niches: Niche[] = nichesReq.data || [];
@@ -256,17 +258,28 @@ export const LibraryB2Component: FC = () => {
                     <span className="text-[9px] font-[600] px-[6px] py-[1px] rounded-full"
                       style={{ background: a[0], color: a[1] }}>{a[2]}</span>
                   </div>
-                  <a href={m.url} download target="_blank" rel="noreferrer"
-                    className="mt-[7px] block text-center text-[11px] font-[700] py-[6px] rounded-[8px] text-white"
-                    style={{ background: 'linear-gradient(135deg,#FF6B00,#E11D2E)' }}>
-                    Baixar
-                  </a>
+                  <div className="flex gap-[5px] mt-[7px]">
+                    <a href={m.url} download target="_blank" rel="noreferrer"
+                      className="flex-1 text-center text-[11px] font-[700] py-[6px] rounded-[8px]"
+                      style={{ border: '1px solid rgba(255,255,255,.15)', color: '#B8A9CF' }}
+                      title="Usar a arte original">
+                      🚀 Usar
+                    </a>
+                    <button onClick={() => setCompose(m)}
+                      className="flex-1 text-[11px] font-[700] py-[6px] rounded-[8px] text-white"
+                      style={{ background: 'linear-gradient(135deg,#FF6B00,#E11D2E)' }}
+                      title="Gerar com a minha marca">
+                      ✨ Marca
+                    </button>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
       )}
+
+      {compose && <BrandComposeModal media={compose} onClose={() => setCompose(null)} />}
     </div>
   );
 };
