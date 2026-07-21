@@ -6,6 +6,7 @@ import { CreditsServiceController } from '@gitroom/backend/api/routes/credits.se
 import { StudioController } from '@gitroom/backend/api/routes/studio.controller';
 import { ImageStudioController } from '@gitroom/backend/api/routes/image.studio.controller';
 import { LibraryController } from '@gitroom/backend/api/routes/library.controller';
+import { LibraryRequestController } from '@gitroom/backend/api/routes/library.request.controller';
 import { LibraryTreeController } from '@gitroom/backend/api/routes/library.tree.controller';
 import { ProvisionerController } from '@gitroom/backend/api/routes/provisioner.controller';
 import { AuthService } from '@gitroom/backend/services/auth/auth.service';
@@ -53,6 +54,7 @@ import { WalletProvider } from '@gitroom/backend/services/auth/providers/wallet.
 import { OauthProvider } from '@gitroom/backend/services/auth/providers/oauth.provider';
 
 const authenticatedController = [
+    LibraryRequestController,
     BrandKitController,
     LibraryTreeController,
     ImageStudioController,
@@ -91,6 +93,7 @@ const authenticatedController = [
     StudioController,
     ImageStudioController,
     LibraryController,
+    LibraryRequestController,
     LibraryTreeController,
     ProvisionerController,
     PublicController,

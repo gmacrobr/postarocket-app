@@ -1,0 +1,23 @@
+
+// ============================================================
+// PostaRocket — Biblioteca B4 · Solicitar Artes
+// Cliente pede uma peça sob medida e acompanha o status.
+// ============================================================
+
+model LibraryRequest {
+  id             String   @id @default(uuid())
+  organizationId String
+  title          String
+  description    String
+  format         String?  // feed | vertical | ambos
+  reference      String?  // link de referência
+  deadline       String?  // prazo desejado (texto livre)
+  status         String   @default("aberta") // aberta | producao | atendida | recusada
+  adminNote      String?  // resposta/observação do time
+  deliveredUrl   String?  // link da arte entregue
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId])
+  @@index([status])
+}

@@ -146,6 +146,16 @@ export const useMenuItem = () => {
       path: '/minha-marca',
     },
     {
+      name: t('solicitar_artes', 'Solicitar Artes'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 24 24" fill="none">
+          <path d="M4 5h16v11H8l-4 4V5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+          <path d="M9 10h6M9 13h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+      ),
+      path: '/solicitar-artes',
+    },
+    {
       name: t('creditos', 'Créditos'),
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 24 24" fill="none">
