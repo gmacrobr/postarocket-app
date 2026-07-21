@@ -16,6 +16,7 @@ import { MediaService } from '@gitroom/nestjs-libraries/database/prisma/media/me
 import { BrandKitService } from '@gitroom/nestjs-libraries/database/prisma/brandkit/brandkit.service';
 import { CreditsService } from '@gitroom/nestjs-libraries/database/prisma/credits/credits.service';
 import { StudioService } from '@gitroom/nestjs-libraries/database/prisma/studio/studio.service';
+import { FlyerStudioService } from '@gitroom/nestjs-libraries/database/prisma/studio/flyer.studio.service';
 import { ImageStudioService } from '@gitroom/nestjs-libraries/database/prisma/studio/image.studio.service';
 import { LibraryService } from '@gitroom/nestjs-libraries/database/prisma/library/library.service';
 import { LibraryRequestService } from '@gitroom/nestjs-libraries/database/prisma/library/library.request.service';
@@ -84,6 +85,7 @@ import { AdminStatsService } from '@gitroom/nestjs-libraries/database/prisma/adm
     BrandKitService,
     CreditsService,
     StudioService,
+    FlyerStudioService,
     ImageStudioService,
     LibraryService,
     LibraryRequestService,

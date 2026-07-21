@@ -4,6 +4,7 @@ import { BrandKitController } from '@gitroom/backend/api/routes/brandkit.control
 import { CreditsController } from '@gitroom/backend/api/routes/credits.controller';
 import { CreditsServiceController } from '@gitroom/backend/api/routes/credits.service.controller';
 import { StudioController } from '@gitroom/backend/api/routes/studio.controller';
+import { FlyerStudioController } from '@gitroom/backend/api/routes/flyer.studio.controller';
 import { ImageStudioController } from '@gitroom/backend/api/routes/image.studio.controller';
 import { LibraryController } from '@gitroom/backend/api/routes/library.controller';
 import { LibraryRequestController } from '@gitroom/backend/api/routes/library.request.controller';
@@ -54,6 +55,7 @@ import { WalletProvider } from '@gitroom/backend/services/auth/providers/wallet.
 import { OauthProvider } from '@gitroom/backend/services/auth/providers/oauth.provider';
 
 const authenticatedController = [
+    FlyerStudioController,
     LibraryRequestController,
     BrandKitController,
     LibraryTreeController,
@@ -91,6 +93,7 @@ const authenticatedController = [
     CreditsController,
     CreditsServiceController,
     StudioController,
+    FlyerStudioController,
     ImageStudioController,
     LibraryController,
     LibraryRequestController,

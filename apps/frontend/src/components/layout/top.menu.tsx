@@ -185,6 +185,16 @@ export const useMenuItem = () => {
       path: '/estudio-imagens',
     },
     {
+      name: t('estudio_flyers', 'Estúdio de Flyers'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 24 24" fill="none">
+          <path d="M6 3h9l4 4v14H6V3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+          <path d="M14 3v5h5M9 12h6M9 16h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+      ),
+      path: '/estudio-flyers',
+    },
+    {
       name: t('plugs', 'Plugs'),
       icon: (
         <svg
