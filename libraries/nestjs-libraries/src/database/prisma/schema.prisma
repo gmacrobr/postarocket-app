@@ -48,6 +48,7 @@ model Organization {
   @@index([streakSince])
   @@index([paymentId])
   creditWallet          CreditWallet?
+  brandKit              BrandKit?
 }
 
 model Tags {
@@ -1155,4 +1156,47 @@ model LibraryPack {
 
   @@index([nicheId])
   @@index([segmentId])
+}
+
+// ============================================================
+// PostaRocket — Biblioteca B3 · Kit de Marca (Minha Marca)
+// Um kit por organização: logos, cores, dados e redes sociais.
+// ============================================================
+
+model BrandKit {
+  id             String       @id @default(uuid())
+  organizationId String       @unique
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // Logos
+  logoLight      String?  // logo para fundo claro
+  logoDark       String?  // logo para fundo escuro
+  logoWide       String?  // versão retangular/horizontal
+  watermark      String?  // marca d'água (PNG transparente)
+
+  // Cores da marca
+  colorPrimary   String?  @default("#FF6B00")
+  colorSecondary String?  @default("#E11D2E")
+  colorAccent    String?  @default("#FFC400")
+
+  // Dados da empresa
+  tradeName      String?  // nome fantasia
+  legalName      String?  // razão social
+  document       String?  // CNPJ/CPF
+  email          String?
+  whatsapp       String?
+  phone          String?
+  website        String?
+  address        String?
+
+  // Redes sociais
+  instagram      String?
+  facebook       String?
+  tiktok         String?
+  youtube        String?
+  linkedin       String?
+  x              String?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

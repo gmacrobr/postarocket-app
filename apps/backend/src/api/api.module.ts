@@ -1,5 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AuthController } from '@gitroom/backend/api/routes/auth.controller';
+import { BrandKitController } from '@gitroom/backend/api/routes/brandkit.controller';
 import { CreditsController } from '@gitroom/backend/api/routes/credits.controller';
 import { CreditsServiceController } from '@gitroom/backend/api/routes/credits.service.controller';
 import { StudioController } from '@gitroom/backend/api/routes/studio.controller';
@@ -52,6 +53,7 @@ import { WalletProvider } from '@gitroom/backend/services/auth/providers/wallet.
 import { OauthProvider } from '@gitroom/backend/services/auth/providers/oauth.provider';
 
 const authenticatedController = [
+    BrandKitController,
     LibraryTreeController,
     ImageStudioController,
     StudioController,
@@ -83,6 +85,7 @@ const authenticatedController = [
     RootController,
     StripeController,
     AuthController,
+    BrandKitController,
     CreditsController,
     CreditsServiceController,
     StudioController,
